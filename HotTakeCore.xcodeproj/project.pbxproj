@@ -16,6 +16,8 @@
 		3CEB6D921DEE949A00D35A77 /* DataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D8F1DEE949A00D35A77 /* DataSourceType.swift */; };
 		3CEB6D931DEE949A00D35A77 /* AnyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D901DEE949A00D35A77 /* AnyDataSource.swift */; };
 		3CEB6D961DEE953600D35A77 /* ReactiveKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D951DEE953600D35A77 /* ReactiveKit.swift */; };
+		3CEB6D991DEE95A100D35A77 /* Manual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D981DEE95A100D35A77 /* Manual.swift */; };
+		3CEB6D9B1DEE95BF00D35A77 /* PostSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D9A1DEE95BF00D35A77 /* PostSort.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,8 @@
 		3CEB6D8F1DEE949A00D35A77 /* DataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceType.swift; sourceTree = "<group>"; };
 		3CEB6D901DEE949A00D35A77 /* AnyDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDataSource.swift; sourceTree = "<group>"; };
 		3CEB6D951DEE953600D35A77 /* ReactiveKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveKit.swift; sourceTree = "<group>"; };
+		3CEB6D981DEE95A100D35A77 /* Manual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Manual.swift; path = DataSources/Manual.swift; sourceTree = "<group>"; };
+		3CEB6D9A1DEE95BF00D35A77 /* PostSort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostSort.swift; path = DataSources/PostSort.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,10 +118,10 @@
 		3CEB6D8C1DEE940E00D35A77 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				3CEB6D971DEE958D00D35A77 /* DataSources */,
 				3CEB6D8D1DEE949200D35A77 /* Base */,
 				3CEB6D941DEE952800D35A77 /* Extensions */,
 			);
-			name = Sources;
 			path = Sources;
 			sourceTree = "<group>";
 		};
@@ -128,7 +132,6 @@
 				3CEB6D8E1DEE949A00D35A77 /* Container.swift */,
 				3CEB6D8F1DEE949A00D35A77 /* DataSourceType.swift */,
 			);
-			name = Base;
 			path = Base;
 			sourceTree = "<group>";
 		};
@@ -137,8 +140,16 @@
 			children = (
 				3CEB6D951DEE953600D35A77 /* ReactiveKit.swift */,
 			);
-			name = Extensions;
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3CEB6D971DEE958D00D35A77 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				3CEB6D981DEE95A100D35A77 /* Manual.swift */,
+				3CEB6D9A1DEE95BF00D35A77 /* PostSort.swift */,
+			);
+			name = DataSources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,9 +265,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CEB6D931DEE949A00D35A77 /* AnyDataSource.swift in Sources */,
+				3CEB6D991DEE95A100D35A77 /* Manual.swift in Sources */,
 				3CEB6D921DEE949A00D35A77 /* DataSourceType.swift in Sources */,
 				3CEB6D911DEE949A00D35A77 /* Container.swift in Sources */,
 				3CEB6D961DEE953600D35A77 /* ReactiveKit.swift in Sources */,
+				3CEB6D9B1DEE95BF00D35A77 /* PostSort.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +481,7 @@
 				3CEB6D891DEE92CB00D35A77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
