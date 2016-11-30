@@ -4,3 +4,6 @@
 [submodule "Carthage/Checkouts/ReactiveKit"]
 	path = Carthage/Checkouts/ReactiveKit
 	url = https://github.com/ReactiveKit/ReactiveKit.git
+[submodule "Carthage/Checkouts/Bond"]
+	path = Carthage/Checkouts/Bond
+	url = https://github.com/ReactiveKit/Bond.git
