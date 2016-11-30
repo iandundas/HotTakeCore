@@ -12,6 +12,10 @@
 		3CEB6D821DEE92CB00D35A77 /* HotTakeCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D811DEE92CB00D35A77 /* HotTakeCoreTests.swift */; };
 		3CEB6D841DEE92CB00D35A77 /* HotTakeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEB6D6D1DEE8FC200D35A77 /* HotTakeCore.framework */; };
 		3CEB6D8B1DEE92D800D35A77 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEB6D8A1DEE92D800D35A77 /* Nimble.framework */; };
+		3CEB6D911DEE949A00D35A77 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D8E1DEE949A00D35A77 /* Container.swift */; };
+		3CEB6D921DEE949A00D35A77 /* DataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D8F1DEE949A00D35A77 /* DataSourceType.swift */; };
+		3CEB6D931DEE949A00D35A77 /* AnyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D901DEE949A00D35A77 /* AnyDataSource.swift */; };
+		3CEB6D961DEE953600D35A77 /* ReactiveKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D951DEE953600D35A77 /* ReactiveKit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +37,10 @@
 		3CEB6D811DEE92CB00D35A77 /* HotTakeCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTakeCoreTests.swift; sourceTree = "<group>"; };
 		3CEB6D831DEE92CB00D35A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3CEB6D8A1DEE92D800D35A77 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Carthage/Checkouts/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
+		3CEB6D8E1DEE949A00D35A77 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		3CEB6D8F1DEE949A00D35A77 /* DataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceType.swift; sourceTree = "<group>"; };
+		3CEB6D901DEE949A00D35A77 /* AnyDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDataSource.swift; sourceTree = "<group>"; };
+		3CEB6D951DEE953600D35A77 /* ReactiveKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveKit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,10 +67,10 @@
 		3CEB6D631DEE8FC200D35A77 = {
 			isa = PBXGroup;
 			children = (
+				3CEB6D781DEE92A900D35A77 /* Frameworks */,
 				3CEB6D6F1DEE8FC200D35A77 /* HotTakeCore */,
 				3CEB6D801DEE92CB00D35A77 /* HotTakeCoreTests */,
 				3CEB6D6E1DEE8FC200D35A77 /* Products */,
-				3CEB6D781DEE92A900D35A77 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,8 +114,31 @@
 		3CEB6D8C1DEE940E00D35A77 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				3CEB6D8D1DEE949200D35A77 /* Base */,
+				3CEB6D941DEE952800D35A77 /* Extensions */,
 			);
 			name = Sources;
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		3CEB6D8D1DEE949200D35A77 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				3CEB6D901DEE949A00D35A77 /* AnyDataSource.swift */,
+				3CEB6D8E1DEE949A00D35A77 /* Container.swift */,
+				3CEB6D8F1DEE949A00D35A77 /* DataSourceType.swift */,
+			);
+			name = Base;
+			path = Base;
+			sourceTree = "<group>";
+		};
+		3CEB6D941DEE952800D35A77 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3CEB6D951DEE953600D35A77 /* ReactiveKit.swift */,
+			);
+			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +253,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CEB6D931DEE949A00D35A77 /* AnyDataSource.swift in Sources */,
+				3CEB6D921DEE949A00D35A77 /* DataSourceType.swift in Sources */,
+				3CEB6D911DEE949A00D35A77 /* Container.swift in Sources */,
+				3CEB6D961DEE953600D35A77 /* ReactiveKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,7 +395,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.iandundas.HotTakeCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -379,13 +413,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.iandundas.HotTakeCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		3CEB6D881DEE92CB00D35A77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = N8N37QWHHP;
 				INFOPLIST_FILE = HotTakeCoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -397,6 +431,7 @@
 		3CEB6D891DEE92CB00D35A77 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = N8N37QWHHP;
 				INFOPLIST_FILE = HotTakeCoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
