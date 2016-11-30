@@ -26,8 +26,8 @@ public protocol DataSourceType {
 public extension DataSourceType{
     public func encloseInContainer() -> Container<ItemType>{
         let wrapper = AnyDataSource(self)
-        let datasourceContainer = Container(datasource: wrapper)
-        return datasourceContainer
+        let container = Container(datasource: wrapper)
+        return container
     }
     public func eraseType() -> AnyDataSource<ItemType>{
         return AnyDataSource(self)
