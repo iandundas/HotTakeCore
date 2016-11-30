@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Carthage/Checkouts/ReactiveKit/ReactiveKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/Nimble/Nimble.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "container:HotTakeCore.xcodeproj">
    </FileRef>
 </Workspace>

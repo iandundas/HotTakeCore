@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3CEB6D7E1DEE92CB00D35A77"
+               BuildableName = "HotTakeCoreTests.xctest"
+               BlueprintName = "HotTakeCoreTests"
+               ReferencedContainer = "container:HotTakeCore.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "3CEB6D6C1DEE8FC200D35A77"
+            BuildableName = "HotTakeCore.framework"
+            BlueprintName = "HotTakeCore"
+            ReferencedContainer = "container:HotTakeCore.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

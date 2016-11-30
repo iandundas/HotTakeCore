@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>HotTakeCoreTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>3CEB6D6C1DEE8FC200D35A77</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3CEB6D7E1DEE92CB00D35A77</key>
 		<dict>
 			<key>primary</key>
 			<true/>

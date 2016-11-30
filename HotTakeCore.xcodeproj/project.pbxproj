@@ -8,12 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		3CEB6D721DEE8FC200D35A77 /* HotTakeCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CEB6D701DEE8FC200D35A77 /* HotTakeCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CEB6D7A1DEE92AA00D35A77 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEB6D791DEE92AA00D35A77 /* ReactiveKit.framework */; };
+		3CEB6D821DEE92CB00D35A77 /* HotTakeCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D811DEE92CB00D35A77 /* HotTakeCoreTests.swift */; };
+		3CEB6D841DEE92CB00D35A77 /* HotTakeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEB6D6D1DEE8FC200D35A77 /* HotTakeCore.framework */; };
+		3CEB6D8B1DEE92D800D35A77 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEB6D8A1DEE92D800D35A77 /* Nimble.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3CEB6D851DEE92CB00D35A77 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CEB6D641DEE8FC200D35A77 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CEB6D6C1DEE8FC200D35A77;
+			remoteInfo = HotTakeCore;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3CEB6D6D1DEE8FC200D35A77 /* HotTakeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HotTakeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CEB6D701DEE8FC200D35A77 /* HotTakeCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotTakeCore.h; sourceTree = "<group>"; };
 		3CEB6D711DEE8FC200D35A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CEB6D791DEE92AA00D35A77 /* ReactiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveKit.framework; path = "Carthage/Checkouts/ReactiveKit/build/Debug-iphoneos/ReactiveKit.framework"; sourceTree = "<group>"; };
+		3CEB6D7F1DEE92CB00D35A77 /* HotTakeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HotTakeCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CEB6D811DEE92CB00D35A77 /* HotTakeCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTakeCoreTests.swift; sourceTree = "<group>"; };
+		3CEB6D831DEE92CB00D35A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CEB6D8A1DEE92D800D35A77 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Carthage/Checkouts/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -21,6 +40,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CEB6D7A1DEE92AA00D35A77 /* ReactiveKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CEB6D7C1DEE92CB00D35A77 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CEB6D8B1DEE92D800D35A77 /* Nimble.framework in Frameworks */,
+				3CEB6D841DEE92CB00D35A77 /* HotTakeCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -31,7 +60,9 @@
 			isa = PBXGroup;
 			children = (
 				3CEB6D6F1DEE8FC200D35A77 /* HotTakeCore */,
+				3CEB6D801DEE92CB00D35A77 /* HotTakeCoreTests */,
 				3CEB6D6E1DEE8FC200D35A77 /* Products */,
+				3CEB6D781DEE92A900D35A77 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -39,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				3CEB6D6D1DEE8FC200D35A77 /* HotTakeCore.framework */,
+				3CEB6D7F1DEE92CB00D35A77 /* HotTakeCoreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -46,10 +78,36 @@
 		3CEB6D6F1DEE8FC200D35A77 /* HotTakeCore */ = {
 			isa = PBXGroup;
 			children = (
+				3CEB6D8C1DEE940E00D35A77 /* Sources */,
 				3CEB6D701DEE8FC200D35A77 /* HotTakeCore.h */,
 				3CEB6D711DEE8FC200D35A77 /* Info.plist */,
 			);
 			path = HotTakeCore;
+			sourceTree = "<group>";
+		};
+		3CEB6D781DEE92A900D35A77 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3CEB6D8A1DEE92D800D35A77 /* Nimble.framework */,
+				3CEB6D791DEE92AA00D35A77 /* ReactiveKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3CEB6D801DEE92CB00D35A77 /* HotTakeCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				3CEB6D811DEE92CB00D35A77 /* HotTakeCoreTests.swift */,
+				3CEB6D831DEE92CB00D35A77 /* Info.plist */,
+			);
+			path = HotTakeCoreTests;
+			sourceTree = "<group>";
+		};
+		3CEB6D8C1DEE940E00D35A77 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,16 +142,40 @@
 			productReference = 3CEB6D6D1DEE8FC200D35A77 /* HotTakeCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		3CEB6D7E1DEE92CB00D35A77 /* HotTakeCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CEB6D871DEE92CB00D35A77 /* Build configuration list for PBXNativeTarget "HotTakeCoreTests" */;
+			buildPhases = (
+				3CEB6D7B1DEE92CB00D35A77 /* Sources */,
+				3CEB6D7C1DEE92CB00D35A77 /* Frameworks */,
+				3CEB6D7D1DEE92CB00D35A77 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3CEB6D861DEE92CB00D35A77 /* PBXTargetDependency */,
+			);
+			name = HotTakeCoreTests;
+			productName = HotTakeCoreTests;
+			productReference = 3CEB6D7F1DEE92CB00D35A77 /* HotTakeCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		3CEB6D641DEE8FC200D35A77 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0810;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Ian Dundas";
 				TargetAttributes = {
 					3CEB6D6C1DEE8FC200D35A77 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = N8N37QWHHP;
+						ProvisioningStyle = Automatic;
+					};
+					3CEB6D7E1DEE92CB00D35A77 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = N8N37QWHHP;
 						ProvisioningStyle = Automatic;
@@ -113,12 +195,20 @@
 			projectRoot = "";
 			targets = (
 				3CEB6D6C1DEE8FC200D35A77 /* HotTakeCore */,
+				3CEB6D7E1DEE92CB00D35A77 /* HotTakeCoreTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3CEB6D6B1DEE8FC200D35A77 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CEB6D7D1DEE92CB00D35A77 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +225,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3CEB6D7B1DEE92CB00D35A77 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CEB6D821DEE92CB00D35A77 /* HotTakeCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3CEB6D861DEE92CB00D35A77 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CEB6D6C1DEE8FC200D35A77 /* HotTakeCore */;
+			targetProxy = 3CEB6D851DEE92CB00D35A77 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3CEB6D731DEE8FC200D35A77 /* Debug */ = {
@@ -185,6 +291,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -230,6 +337,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -275,6 +383,28 @@
 			};
 			name = Release;
 		};
+		3CEB6D881DEE92CB00D35A77 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = N8N37QWHHP;
+				INFOPLIST_FILE = HotTakeCoreTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.iandundas.HotTakeCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3CEB6D891DEE92CB00D35A77 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = N8N37QWHHP;
+				INFOPLIST_FILE = HotTakeCoreTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.iandundas.HotTakeCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -292,6 +422,15 @@
 			buildConfigurations = (
 				3CEB6D761DEE8FC200D35A77 /* Debug */,
 				3CEB6D771DEE8FC200D35A77 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CEB6D871DEE92CB00D35A77 /* Build configuration list for PBXNativeTarget "HotTakeCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CEB6D881DEE92CB00D35A77 /* Debug */,
+				3CEB6D891DEE92CB00D35A77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
