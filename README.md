@@ -12,7 +12,7 @@ For Realm this comes via the [Realm Change Notifications](https://realm.io/docs/
 
 For example, using the Realm adapter, a Realm query `Result<Cat>` of Cat objects could be plugged into `HotTake.Container`, and bound to a TableView. Any changes to the Realm would be reflected in the tableView automatically. You could then swap the Realm adapter out for a static array of `Cat` objects - any Observers would receive the diff of what changed (and what did not). In turn, you could then swap in any other DataSource containing Cats and it would react to that new collection, providing you a diff.
 
-e.g. you might do the following (_[download example](https://github.com/iandundas/HotTakeDemo)):
+e.g. you might do the following (_[download example](https://github.com/iandundas/HotTakeDemo)_):
 
 - Plug in a Realm query `Result<Cat>`:
 - Insert new items into Realm
