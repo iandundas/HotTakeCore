@@ -52,7 +52,7 @@ Note: you must provide a sorted RealmQuery as input to `PostSortDataSource`, bec
 
 ### Usage
 
-_more detailed instructions coming soon_
+_more detailed instructions coming soon_. There is a demo app [here]](https://github.com/iandundas/HotTakeDemo)_):
 
 #### Creating your datasource:
 
