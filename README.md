@@ -49,6 +49,56 @@ Note: you must provide a sorted RealmQuery as input to `PostSortDataSource`, bec
 - Swift 2.3
 - iOS only, currently
 
+### Usage
+
+_more detailed instructions coming soon_
+
+#### Creating your datasource:
+
+__Array DataSource__:
+
+```swift
+let arrayDataSource = ManualDataSource<Cat>(items: cats)
+```
+
+__Realm DataSource__:
+
+```swift
+  let realm = try! RealmSwift.Realm(configuration: RealmSwift.Realm.Configuration(inMemoryIdentifier: sharedRealmID))
+  let result = realm.objects(Cat).sorted("miceEaten")
+  let realmDataSource = RealmDataSource(items: result)
+```
+
+#### Creating your container:
+
+```swift
+let container = Container<Cat>(datasource: realmDataSource.eraseType())
+```
+
+#### Binding and Observing:
+
+HotTake is built on top of ReactiveKit, so you can use this powerful Functional Reactive library to observe the mutations, and to bind to e.g. a UITableView:
+
+
+```swift
+container.collection.observeNext { (changeset) in
+    print("Changeset: \(changeset)\n\n")
+}.disposeIn(rBag)
+
+// Bind container to TableView:
+container.collection.bindTo(tableView) {
+    (indexPath, items, tableView) -> UITableViewCell in
+
+    let item = items[indexPath.row]
+    let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+    cell.textLabel?.text = item.name
+    return cell
+
+}.disposeIn(rBag)
+
+```
+
+
 ### Installation:
 
 #### Carthage:
