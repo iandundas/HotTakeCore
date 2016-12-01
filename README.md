@@ -52,7 +52,7 @@ Note: you must provide a sorted RealmQuery as input to `PostSortDataSource`, bec
 
 ### Usage
 
-_more detailed instructions coming soon_. There is a demo app [here]](https://github.com/iandundas/HotTakeDemo)_):
+_more detailed instructions coming soon_. There is a demo app [here](https://github.com/iandundas/HotTakeDemo):
 
 #### Creating your datasource:
 
@@ -109,7 +109,7 @@ container.collection.bindTo(tableView) {
 
 - Run the following;
 
-`carthage update --toolchain com.apple.dt.toolchain.Swift_2_3 --platform iOS`s
+`carthage update --toolchain com.apple.dt.toolchain.Swift_2_3 --platform iOS`
 
 - Add the built frameworks to your project as described [on Carthage](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos), as well as adding each to the Embed Frameworks build phase.
 
