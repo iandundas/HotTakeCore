@@ -2,29 +2,45 @@
 
 _Current release: v0.9.1_
 
-HotTake provides a reactive collection that allows Equatable objects to be hot-swapped on the fly, providing a changeset of what changed.
+HotTake builds on the functionality of the `CollectionProperty` type from [ReactiveKit 2](https://github.com/ReactiveKit/ReactiveKit/tree/v2.1.1).
 
+It provides a reactive Collection that is driven by any _observable_ backing datasource (currently supporting Realm, a regular Array and, coming soon, CoreData) which can be "hot-swapped" to another datasource on the fly, providing any observers with a diff of what's changed, and then re-binding to the underlying datasource to continue delivering their own ChangeSets.
 
-HotTake provides a reactive collection with a backing datasource that can be "hot-swapped" on the fly. 
+## Realm adapter:
 
-For example, a Realm Result of `Cat` objects could be swapped out for a static array of `Cat` objects, and observers would receive the diff of what changed (and what did not). 
+For Realm this comes via the [Realm Change Notifications](https://realm.io/docs/swift/latest/#notifications), for CoreData this comes via [NSFetchedResultsController](https://developer.apple.com/reference/coredata/nsfetchedresultscontroller), and for static Arrays this comes from the inherent ability of ReactiveKit's `CollectionProperty` to diff (Equatable-conforming) Arrays.
 
-It also supports notifications bubbling up from the datasource itself - for example, the Realm datasource implements Realm Notifications, thus passing the changeset from your Realm itself.
+For example, using the Realm adapter, a Realm query `Result<Cat>` of Cat objects could be plugged into `HotTake.Container`, and bound to a TableView. Any changes to the Realm would be reflected in the tableView automatically. You could then swap the Realm adapter out for a static array of `Cat` objects - any Observers would receive the diff of what changed (and what did not). In turn, you could then swap in any other DataSource containing Cats and it would react to that new collection, providing you a diff.
 
+e.g. you might do the following:
 
-
-
-
-For example, using the Realm adapter, you might do the following:
-
-- Plug in a Realm resultset:
-- Insert a new item
-- Receive the change
-- Swap in a specific Array of Cats, separate to the Realm result
+- Plug in a Realm query `Result<Cat>`:
+- Insert new items into Realm
+- Receive the change (it uses Realm Notifications under the hood), and present on the tableView
+- Swap in a specific Array of Cats (in this case, a simple array pulled from Realm for demonstration purposes, but it could be anything), separate to the Realm result
 - Receive the diff
 
+<img src="https://cl.ly/0J2q352v263O/Screen%20Recording%202016-12-01%20at%2012.10%20pm.gif" />
 
-Note: you must provide a sorted RealmQuery, because [warning from realm]
+
+## Post-Sort
+
+Datasources can also be chained. For example, there is a PostSort adapter which can be added to the chain to provide your own sorting, separate from the underlying datasource.
+
+This was useful in my app [Tacks](http://tacks.cc), because I needed to sort my Realm query results by distance from my current location, whilst also preserving the ability to observe the array and receive diffs when the underlying dataset changed.
+
+```swift
+  // Apply post-sort over the Realm datasource:
+  datasource = RealmDataSource(items: result).postSort() { (a: Place, b:Place) in
+      return ascending
+          ? a.location.distanceFromLocation(currentLocation) < b.location.distanceFromLocation(currentLocation)
+          : a.location.distanceFromLocation(currentLocation) > b.location.distanceFromLocation(currentLocation)
+  }
+```
+
+It is not possible to query Realm like this otherwise.
+
+Note: you must provide a sorted RealmQuery as input to `PostSortDataSource`, because "Note that the order of Results is only guaranteed to stay consistent when the query is sorted." (realm docs)[https://realm.io/docs/swift/latest/#sorting]
 
 
 ### Requirements:
@@ -45,7 +61,7 @@ Note: you must provide a sorted RealmQuery, because [warning from realm]
 `carthage update --toolchain com.apple.dt.toolchain.Swift_2_3 --platform iOS`s
 
 - Add the built frameworks to your project as described [on Carthage](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos), as well as adding each to the Embed Frameworks build phase.
- 
+
 
 #### Cocoapods
 _coming soon_
