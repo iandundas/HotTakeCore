@@ -33,3 +33,13 @@ public class PostSortDataSource<Item: Equatable>: DataSourceType {
         internalDataSource.mutations().bindTo(collection)
     }
 }
+
+
+public extension DataSourceType{
+
+    public func postSort(isOrderedBefore: (ItemType, ItemType) -> Bool) -> AnyDataSource<ItemType>{
+        let wrapper = AnyDataSource(self)
+        let postsort = PostSortDataSource(datasource: wrapper, isOrderedBefore: isOrderedBefore)
+        return AnyDataSource(postsort)
+    }
+}
