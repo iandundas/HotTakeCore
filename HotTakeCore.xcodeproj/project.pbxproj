@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C1898F91E02C142008F4BCB /* Bond.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C1898F81E02C142008F4BCB /* Bond.framework */; };
 		3CEB6D721DEE8FC200D35A77 /* HotTakeCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CEB6D701DEE8FC200D35A77 /* HotTakeCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEB6D7A1DEE92AA00D35A77 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEB6D791DEE92AA00D35A77 /* ReactiveKit.framework */; };
 		3CEB6D841DEE92CB00D35A77 /* HotTakeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEB6D6D1DEE8FC200D35A77 /* HotTakeCore.framework */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C1898F81E02C142008F4BCB /* Bond.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bond.framework; path = "Build/Products/Debug-iphoneos/Bond.framework"; sourceTree = "<group>"; };
 		3CEB6D6D1DEE8FC200D35A77 /* HotTakeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HotTakeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CEB6D701DEE8FC200D35A77 /* HotTakeCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotTakeCore.h; sourceTree = "<group>"; };
 		3CEB6D711DEE8FC200D35A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C1898F91E02C142008F4BCB /* Bond.framework in Frameworks */,
 				3CEB6D7A1DEE92AA00D35A77 /* ReactiveKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,6 +113,7 @@
 		3CEB6D781DEE92A900D35A77 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C1898F81E02C142008F4BCB /* Bond.framework */,
 				3CEB6D8A1DEE92D800D35A77 /* Nimble.framework */,
 				3CEB6D791DEE92AA00D35A77 /* ReactiveKit.framework */,
 			);
