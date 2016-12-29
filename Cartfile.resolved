@@ -1,0 +1,3 @@
+github "quick/Nimble" "v5.1.1"
+github "ReactiveKit/ReactiveKit" "v3.1.1"
+github "ReactiveKit/Bond" "v5.2.0"
