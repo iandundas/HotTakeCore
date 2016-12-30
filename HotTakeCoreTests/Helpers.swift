@@ -8,5 +8,7 @@
 
 import Foundation
 import ReactiveKit
+import Bond
 
-typealias ChangesetProperty = ReactiveKit.Property<CollectionChangeset<[Cat]>?>
+
+typealias ChangesetProperty = ReactiveKit.Property<ObservableArrayEvent<Cat>?>
