@@ -31,7 +31,7 @@ public class Container<ItemType: Equatable>{
             
             
             let incomingItems = datasource.items()
-            let existingItems = collection.array
+            let existingItems = _collection.array
             
             // Ensure that the incoming collection is different to the existing collection, because otherwise
             // we'll get an empty changeset event which can be mistaken for a .Initial event
@@ -39,7 +39,7 @@ public class Container<ItemType: Equatable>{
                 // do nothing
             }
             else{
-                collection.replace(with: incomingItems, performDiff: true)
+                _collection.replace(with: incomingItems, performDiff: true)
             }
             setupDataSourceBinding()
         }
@@ -49,21 +49,24 @@ public class Container<ItemType: Equatable>{
     // When the data source mutates (or even if it is swapped), this will send valid ChangeSets
     
     // !!FIXME: this needs to not be publicly Mutable!!
-    public let collection: MutableObservableArray<ItemType>
-
+    private let _collection: MutableObservableArray<ItemType>
+    public var collection: ObservableArray<ItemType> {
+        return _collection
+    }
+    
     public required init(datasource: AnyDataSource<ItemType>){ // , rebinding: RebindingType){
 
         self.datasource = datasource
 
         let existingItems = datasource.items()
 
-        collection = MutableObservableArray(existingItems)
+        _collection = MutableObservableArray(existingItems)
 
         setupDataSourceBinding()
     }
 
     private func setupDataSourceBinding(){
-        datasource.mutations().bind(to: collection).disposeIn(disposable) 
+        datasource.mutations().bind(to: _collection).disposeIn(disposable) 
     }
 
     deinit{
