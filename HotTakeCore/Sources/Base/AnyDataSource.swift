@@ -51,8 +51,7 @@ public final class AnyDataSource<Element: Equatable>: DataSourceType{
         return box.mutations()
     }
 
-    public init<S: DataSourceType where S.ItemType == Element>(_ base: S) {
+    public init<S: DataSourceType>(_ base: S) where S.ItemType == Element {
         self.box = _AnyDataSourceBox(base)
     }
-
 }

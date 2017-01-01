@@ -8,9 +8,17 @@
 
 import Foundation
 import ReactiveKit
+import Bond
 
-public extension CollectionChangeset{
+public extension ObservableArrayEvent{
+
+    @available(*, deprecated: 1.0, message: "Use resetted instead (and try to phase out usage)")
     var hasNoMutations: Bool{
-        return inserts.count == 0 && updates.count == 0 && deletes.count == 0
+        return resetted
+    }
+    
+    var resetted: Bool {
+        guard case .reset = change else { return false }
+        return true
     }
 }

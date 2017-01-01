@@ -246,7 +246,7 @@ class ManualDatasourceTests: XCTestCase {
         expect(secondChangeset.value).toEventually(beNil())
     }
 
-    func testBasicDeleteWhereColletionIsEmptyWhenObservingAfterwards() {
+    func testBasicDeleteWhereCollectionIsEmptyWhenObservingAfterwards() {
         datasource = ManualDataSource<Cat>(items: [catA])
         
         datasource.replaceItems(items:[])

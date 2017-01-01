@@ -8,6 +8,8 @@
 
 import UIKit
 import ReactiveKit
+import Bond
+
 
 public class Container<ItemType: Equatable>{
 
@@ -29,7 +31,7 @@ public class Container<ItemType: Equatable>{
             
             
             let incomingItems = datasource.items()
-            let existingItems = collection.collection
+            let existingItems = collection.array
             
             // Ensure that the incoming collection is different to the existing collection, because otherwise
             // we'll get an empty changeset event which can be mistaken for a .Initial event
@@ -37,7 +39,7 @@ public class Container<ItemType: Equatable>{
                 // do nothing
             }
             else{
-                collection.replace(incomingItems, performDiff: true)
+                collection.replace(with: incomingItems, performDiff: true)
             }
             setupDataSourceBinding()
         }
@@ -45,7 +47,9 @@ public class Container<ItemType: Equatable>{
 
     // This is the external, observable representation of the internal datasource.
     // When the data source mutates (or even if it is swapped), this will send valid ChangeSets
-    public let collection: CollectionProperty<[ItemType]>
+    
+    // !!FIXME: this needs to not be publicly Mutable!!
+    public let collection: MutableObservableArray<ItemType>
 
     public required init(datasource: AnyDataSource<ItemType>){ // , rebinding: RebindingType){
 
@@ -53,16 +57,13 @@ public class Container<ItemType: Equatable>{
 
         let existingItems = datasource.items()
 
-        collection = CollectionProperty(existingItems)
+        collection = MutableObservableArray(existingItems)
 
         setupDataSourceBinding()
     }
 
     private func setupDataSourceBinding(){
-        datasource.mutations()
-            .filter{ !$0.hasNoMutations } // we set the initial value manually when binding, so this causes a duplicate event, filter it out.
-            .bindTo(collection)
-            .disposeIn(disposable)
+        datasource.mutations().bind(to: collection).disposeIn(disposable) 
     }
 
     deinit{
