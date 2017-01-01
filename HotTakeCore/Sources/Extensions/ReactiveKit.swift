@@ -10,8 +10,14 @@ import Foundation
 import ReactiveKit
 import Bond
 
-public extension ObservableArrayEvent{
+public extension ObservableArrayEvent {
+    public init(change: ObservableArrayChange, source: ObservableArray<Item>) {
+        self.change = change
+        self.source = source
+    }
+}
 
+public extension ObservableArrayEvent{
     @available(*, deprecated: 1.0, message: "Use resetted instead (and try to phase out usage)")
     var hasNoMutations: Bool{
         return resetted
@@ -22,3 +28,4 @@ public extension ObservableArrayEvent{
         return true
     }
 }
+
