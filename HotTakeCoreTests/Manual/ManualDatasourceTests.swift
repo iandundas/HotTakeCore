@@ -19,48 +19,6 @@ import Bond
   - Observers should receive correct diff notifications when things change
  */
 
-
-public func equal(_ expected: ObservableArrayChange?) -> MatcherFunc<ObservableArrayChange?> {
-    return MatcherFunc { actualExpression, failureMessage in
-        failureMessage.postfixMessage = "equal <\(expected)>"
-        
-        guard let evaluatedActualValue = try actualExpression.evaluate() else {return false}
-        guard let concreteActualValue = evaluatedActualValue, let expectedValue = expected else {
-            return evaluatedActualValue == nil && expected == nil // if they're both nil, then alright.
-        }
-        
-        switch (concreteActualValue, expectedValue){
-        case (.reset, .reset): return true
-        case (.beginBatchEditing, .beginBatchEditing): return true
-        case (.endBatchEditing, .endBatchEditing): return true
-        case let (.inserts(a), .inserts(b)): return a == b
-        case let (.deletes(a), .deletes(b)): return a == b
-        case let (.updates(a), .updates(b)): return a == b
-        case let (.move(a), .move(b)): return a == b
-        default:
-            fatalError("@id This matcher does not support \(concreteActualValue) vs \(expectedValue) comparisons yet..")
-        }
-    }
-}
-
-
-
-//public func equal<T: Equatable>(_ expected: ObservableArrayEvent<T>?) -> MatcherFunc<ObservableArrayEvent<T>?> {
-//    return MatcherFunc { actualExpression, failureMessage in
-//        failureMessage.postfixMessage = "equal <\(expected)>"
-//        
-//        guard let evaluatedActualValue = try actualExpression.evaluate() else {return false}
-//        guard let concreteActualValue = evaluatedActualValue, let expectedValue = expected else {
-//            return evaluatedActualValue == nil && expected == nil // if they're both nil, then alright.
-//        }
-//        
-//        guard concreteActualValue.source.array == expectedValue.source.array else {return false}
-//        
-//        
-//        return MatcherFunc(concreteActualValue) // .equal(concreteActualValue)
-//    }
-//}
-
 class ManualDatasourceTests: XCTestCase {
 
     let catA = Cat(name: "Mr A")
