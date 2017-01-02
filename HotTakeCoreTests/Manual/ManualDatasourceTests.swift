@@ -58,20 +58,24 @@ class ManualDatasourceTests: XCTestCase {
     }
     
     func testInsertEventIsReceived(){
-        let items = [catA, catB]
-        datasource = ManualDataSource<Cat>(items: items)
-
-        let firstEvent = ChangesetProperty(nil)
-        let secondEvent = ChangesetProperty(nil)
+        datasource = ManualDataSource<Cat>(items: [])
         
-        datasource.mutations().element(at: 0).bind(to: firstEvent).disposeIn(bag)
+        let secondEvent = ChangesetProperty(nil)
         datasource.mutations().element(at: 1).bind(to: secondEvent).disposeIn(bag)
         
-        expect(firstEvent.value?.change).to(equal(ObservableArrayChange.reset))
-        expect(firstEvent.value?.dataSource.array).to(equal(items))
-        expect(secondEvent.value?.change).to(beNil())
+        let thirdEvent = ChangesetProperty(nil)
+        datasource.mutations().element(at: 2).bind(to: thirdEvent).disposeIn(bag)
+        
+        let fourthEvent = ChangesetProperty(nil)
+        datasource.mutations().element(at: 3).bind(to: fourthEvent).disposeIn(bag)
+        
+        datasource.replaceItems(items: [catA, catB])
+        
+        expect(secondEvent.value?.change).to(equal(ObservableArrayChange.beginBatchEditing))
+        expect(thirdEvent.value?.change).to(equal(ObservableArrayChange.inserts([0,1])))
+        expect(fourthEvent.value?.change).to(equal(ObservableArrayChange.endBatchEditing))
     }
-
+    
     func testDeleteEventIsReceived(){
         let items = [catA, catB]
         datasource = ManualDataSource<Cat>(items: items)
@@ -105,6 +109,7 @@ class ManualDatasourceTests: XCTestCase {
         datasource.replaceItems(items: [catA])
         
         expect(firstChangeset.value?.source).to(beEmpty())
+        
         expect(thirdChangeset.value?.source).to(haveCount(1))
         expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.inserts([0])))
     }
