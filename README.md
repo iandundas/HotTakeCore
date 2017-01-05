@@ -12,7 +12,7 @@ For Realm this comes via the [Realm Change Notifications](https://realm.io/docs/
 
 For example, using the Realm adapter, a Realm query `Result<Cat>` of Cat objects could be plugged into `HotTake.Container`, and bound to a TableView. Any changes to the Realm would be reflected in the tableView automatically. You could then swap the Realm adapter out for a static array of `Cat` objects - any Observers would receive the diff of what changed (and what did not). In turn, you could then swap in any other DataSource containing Cats and it would react to that new collection, providing you a diff.
 
-e.g. you might do the following:
+e.g. you might do the following (_[download example](https://github.com/iandundas/HotTakeDemo)_):
 
 - Plug in a Realm query `Result<Cat>`:
 - Insert new items into Realm
@@ -46,8 +46,59 @@ Note: you must provide a sorted RealmQuery as input to `PostSortDataSource`, bec
 ### Requirements:
 
 - Xcode 8
-- Swift 2.3
+- Swift 2.3 (will support v3.0 soon)
+- ReactiveKit 2.1.1  (will support v3.0 soon)
 - iOS only, currently
+
+### Usage
+
+_more detailed instructions coming soon_. There is a demo app [here](https://github.com/iandundas/HotTakeDemo):
+
+#### Creating your datasource:
+
+__Array DataSource__:
+
+```swift
+let arrayDataSource = ManualDataSource<Cat>(items: cats)
+```
+
+__Realm DataSource__:
+
+```swift
+  let realm = try! RealmSwift.Realm(configuration: RealmSwift.Realm.Configuration(inMemoryIdentifier: sharedRealmID))
+  let result = realm.objects(Cat).sorted("miceEaten")
+  let realmDataSource = RealmDataSource(items: result)
+```
+
+#### Creating your container:
+
+```swift
+let container = Container<Cat>(datasource: realmDataSource.eraseType())
+```
+
+#### Binding and Observing:
+
+HotTake is built on top of ReactiveKit, so you can use this powerful Functional Reactive library to observe the mutations, and to bind to e.g. a UITableView:
+
+
+```swift
+container.collection.observeNext { (changeset) in
+    print("Changeset: \(changeset)\n\n")
+}.disposeIn(rBag)
+
+// Bind container to TableView:
+container.collection.bindTo(tableView) {
+    (indexPath, items, tableView) -> UITableViewCell in
+
+    let item = items[indexPath.row]
+    let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+    cell.textLabel?.text = item.name
+    return cell
+
+}.disposeIn(rBag)
+
+```
+
 
 ### Installation:
 
@@ -58,7 +109,7 @@ Note: you must provide a sorted RealmQuery as input to `PostSortDataSource`, bec
 
 - Run the following;
 
-`carthage update --toolchain com.apple.dt.toolchain.Swift_2_3 --platform iOS`s
+`carthage update --toolchain com.apple.dt.toolchain.Swift_2_3 --platform iOS`
 
 - Add the built frameworks to your project as described [on Carthage](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos), as well as adding each to the Embed Frameworks build phase.
 
