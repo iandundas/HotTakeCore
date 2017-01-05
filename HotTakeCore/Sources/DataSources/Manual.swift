@@ -8,6 +8,7 @@
 
 import Foundation
 import ReactiveKit
+import Bond
 
 public class ManualDataSource<Item: Equatable>: DataSourceType {
     
@@ -15,16 +16,17 @@ public class ManualDataSource<Item: Equatable>: DataSourceType {
         return collection.filter{_ in true}
     }
     
+    // TODO remove "Items" part of name 
     // only available publicly on ManualDataSource (because it's.. manual)
     public func replaceItems(items: [Item]) {
-        collection.replace(items, performDiff: true)
+        collection.replace(with: items, performDiff: true)
     }
     
-    public func mutations() -> Stream<CollectionChangeset<[Item]>>{
+    public func mutations() -> Signal1<ObservableArrayEvent<Item>>{
         return collection.filter {_ in true}
     }
     
-    private let collection: CollectionProperty<Array<Item>>
+    private let collection: MutableObservableArray<Item>
     
     /* TODO: currently only takes Array CollectionType
      init<C: CollectionType where C.Generator.Element == Element>(collection: C){
@@ -33,6 +35,6 @@ public class ManualDataSource<Item: Equatable>: DataSourceType {
      */
     
     public init(items: [Item]){
-        self.collection = CollectionProperty(items)
+        self.collection = MutableObservableArray(items)
     }
 }

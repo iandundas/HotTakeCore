@@ -11,7 +11,7 @@ import UIKit
 public class Cat {
     public let name: String
     public let miceEaten: Int
-    public let id: String = NSUUID().UUIDString
+    public let id: String = NSUUID().uuidString
     
     public init(name: String, miceEaten: Int = 0){
         self.name = name

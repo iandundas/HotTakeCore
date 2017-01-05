@@ -8,6 +8,7 @@
 
 import Foundation
 import ReactiveKit
+import Bond
 
 public protocol DataSourceType {
     associatedtype ItemType : Equatable
@@ -16,7 +17,7 @@ public protocol DataSourceType {
     func items() -> [ItemType]
 
     // Access a feed of mutation events:
-    func mutations() -> Stream<CollectionChangeset<[ItemType]>>
+    func mutations() -> Signal1<ObservableArrayEvent<ItemType>>
 
     func encloseInContainer() -> Container<ItemType>
     
