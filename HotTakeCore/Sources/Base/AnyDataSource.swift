@@ -8,13 +8,14 @@
 
 import UIKit
 import ReactiveKit
+import Bond
 
 private class _AnyDataSourceBoxBase<T: Equatable>: DataSourceType{
     func items() -> Array<T>{
         fatalError()
     }
 
-    func mutations() -> Stream<CollectionChangeset<[T]>> {
+    func mutations() -> Signal1<ObservableArrayEvent<T>> {
         fatalError()
     }
 }
@@ -32,7 +33,7 @@ private class _AnyDataSourceBox<DataSource: DataSourceType>: _AnyDataSourceBoxBa
         return base.items()
     }
 
-    override func mutations() -> Stream<CollectionChangeset<[ItemType]>> {
+    override func mutations() -> Signal1<ObservableArrayEvent<ItemType>> {
         return base.mutations()
     }
 }
@@ -46,12 +47,11 @@ public final class AnyDataSource<Element: Equatable>: DataSourceType{
         return box.items()
     }
 
-    public func mutations() -> Stream<CollectionChangeset<[Element]>> {
+    public func mutations() -> Signal1<ObservableArrayEvent<Element>> {
         return box.mutations()
     }
 
-    public init<S: DataSourceType where S.ItemType == Element>(_ base: S) {
+    public init<S: DataSourceType>(_ base: S) where S.ItemType == Element {
         self.box = _AnyDataSourceBox(base)
     }
-
 }

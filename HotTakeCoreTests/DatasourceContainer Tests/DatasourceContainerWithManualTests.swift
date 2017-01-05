@@ -9,6 +9,7 @@
 import XCTest
 import ReactiveKit
 import Nimble
+import Bond
 
 @testable import HotTakeCore
 
@@ -35,33 +36,29 @@ class ContainerWithManualTests: XCTestCase {
     }
 
     func testInitialEventWhenStartingWithEmptyCollection(){
+        let container = ManualDataSource<Cat>(items: []).encloseInContainer()
         
-        let dsc = ManualDataSource<Cat>(items: []).encloseInContainer()
+        let firstChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 0).bind(to: firstChangeset)
+
+        let secondChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 1).bind(to: secondChangeset)
         
-        var detectedInitialEvent = false
-        dsc.collection.observeNext { changes in
-            guard changes.hasNoMutations else {fail("Should be initial event"); return}
-            guard changes.collection.count == 0 else {fail("Should have been an empty initial collection");return}
-            let noMutations = changes.hasNoMutations
-            detectedInitialEvent = noMutations
-            
-        }.disposeIn(bag)
-        
-        expect(detectedInitialEvent).toEventually(beTrue())
+        expect(firstChangeset.value?.change).toEventually(equal(ObservableArrayChange.reset))
+        expect(secondChangeset.value).to(beNil())
     }
         
     func testInitialEventWhenStartingWithNonemptyCollection(){
-        
-        let dsc = ManualDataSource<Cat>(items: nonemptyCollection).encloseInContainer()
+        let container = ManualDataSource<Cat>(items: nonemptyCollection).encloseInContainer()
         
         var initialItems = [Cat]()
         var detectedInitialEvent = false
-        dsc.collection.observeNext { changes in
-            guard changes.hasNoMutations else {fail("Should be initial event"); return}
-            let noMutations = changes.hasNoMutations
+        container.collection.observeNext { changes in
+            guard changes.resetted else {fail("Should be initial event"); return}
+            let noMutations = changes.resetted
             detectedInitialEvent = noMutations
             
-            initialItems = changes.collection
+            initialItems = changes.source.array
         }.disposeIn(bag)
     
         expect(detectedInitialEvent).toEventually(beTrue())
@@ -70,51 +67,88 @@ class ContainerWithManualTests: XCTestCase {
 
     // Expecting a single corrected initial event, rather than any reported updates
     func testInitialEventWhenObservingAfterInsertingOnAnEmptyDataSource(){
-        
         let datasource = ManualDataSource<Cat>(items: emptyCollection)
         let dsc = datasource.encloseInContainer()
         
-        datasource.replaceItems(nonemptyCollection)
+        datasource.replaceItems(items: nonemptyCollection)
         
         var initialItems = [Cat]()
         var detectedInitialEvent = false
         dsc.collection.observeNext { changes in
-            guard changes.hasNoMutations else {fail("Should be initial event"); return}
-            detectedInitialEvent = changes.hasNoMutations
+            guard changes.resetted else {fail("Should be initial event"); return}
+            detectedInitialEvent = changes.resetted
             
-            initialItems = changes.collection
+            initialItems = changes.source.array
         }.disposeIn(bag)
         
         expect(detectedInitialEvent).toEventually(beTrue())
         expect(initialItems).toEventually(equal(nonemptyCollection))
     }
-    
+
     func testInitialSubscriptionSendsASingleCurrentStateEventWhenInitiallyObserved(){
         
         var observeCallCount = 0
-        var inserted = false
-        var updated = false
-        var deleted = false
-        
         let container = ManualDataSource<Cat>(items: [Cat]()).encloseInContainer()
         
         container.collection
             .observeNext { changes in
-                guard changes.hasNoMutations else {fail("Should be initial event"); return}
+                guard changes.resetted else {fail("Should be initial event"); return}
                 
                 observeCallCount += 1
-                
-                inserted = inserted || changes.inserts.count > 0
-                updated = updated || changes.updates.count > 0
-                deleted = deleted || changes.deletes.count > 0
-                
             }.disposeIn(bag)
         
         expect(observeCallCount).toEventually(equal(1), timeout: 1)
-        expect(inserted).toEventually(equal(false), timeout: 1)
-        expect(updated).toEventually(equal(false), timeout: 1)
-        expect(deleted).toEventually(equal(false), timeout: 1)
+        expect(observeCallCount).toEventuallyNot(beGreaterThan(1), timeout: 1)
     }
     
-}
+    func testSwapEmptyForEmptyProducesNoChange(){
+        
+        let container = ManualDataSource<Cat>(items: [Cat]()).encloseInContainer()
+        
+        let firstChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 0).bind(to: firstChangeset)
+        
+        let secondChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 1).bind(to: secondChangeset)
 
+        // replace datasource:
+        container.datasource = ManualDataSource<Cat>(items: [Cat]()).eraseType()
+        
+        expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
+        expect(secondChangeset.value).toNot(beNil())
+    }
+    
+    func testSwapNonemptyForEmptyProducesNoChange(){
+        
+        let container = ManualDataSource<Cat>(items: nonemptyCollection).encloseInContainer()
+        
+        let firstChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 0).bind(to: firstChangeset)
+        
+        let thirdChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 2).bind(to: thirdChangeset)
+        
+        // replace datasource:
+        container.datasource = ManualDataSource<Cat>(items: [Cat]()).eraseType()
+        
+        expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
+        expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.deletes([0,1,2])))
+    }
+    
+    func testMutationProducesChange(){
+        let datasource = ManualDataSource<Cat>(items: nonemptyCollection)
+        let container = datasource.encloseInContainer()
+        
+        let firstChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 0).bind(to: firstChangeset)
+        
+        let thirdChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 2).bind(to: thirdChangeset)
+        
+        // mutate datasource:
+        datasource.replaceItems(items: emptyCollection)
+        
+        expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
+        expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.deletes([0,1,2])))
+    }
+}
