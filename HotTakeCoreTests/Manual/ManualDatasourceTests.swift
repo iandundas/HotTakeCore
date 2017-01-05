@@ -206,7 +206,6 @@ class ManualDatasourceTests: XCTestCase {
         expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
         
         expect(secondChangeset.value).toEventually(beNil())
-        expect(secondChangeset.value).toEventually(beNil())
     }
 
     func testBasicDeleteWhereCollectionIsEmptyWhenObservingAfterwards() {

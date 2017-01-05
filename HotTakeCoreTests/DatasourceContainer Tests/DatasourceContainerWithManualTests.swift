@@ -36,7 +36,6 @@ class ContainerWithManualTests: XCTestCase {
     }
 
     func testInitialEventWhenStartingWithEmptyCollection(){
-        
         let container = ManualDataSource<Cat>(items: []).encloseInContainer()
         
         let firstChangeset = ChangesetProperty(nil)

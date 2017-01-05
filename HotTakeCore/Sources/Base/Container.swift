@@ -66,7 +66,9 @@ public class Container<ItemType: Equatable>{
     }
 
     private func setupDataSourceBinding(){
-        datasource.mutations().bind(to: _collection).disposeIn(disposable) 
+        datasource.mutations()
+            .filter { return !$0.resetted }
+            .bind(to: _collection).disposeIn(disposable)
     }
 
     deinit{
