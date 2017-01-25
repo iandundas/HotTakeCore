@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C0562271E1673A300BB660C /* DatasourceContainerWithManualTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6DA51DEE963B00D35A77 /* DatasourceContainerWithManualTests.swift */; };
 		3C1898F91E02C142008F4BCB /* Bond.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C1898F81E02C142008F4BCB /* Bond.framework */; };
+		3C3DEDCA1E390A6E00B34699 /* Bond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3DEDC91E390A6E00B34699 /* Bond.swift */; };
 		3CBB66321E02CB450040C4B4 /* ManualDatasourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB6D9F1DEE961000D35A77 /* ManualDatasourceTests.swift */; };
 		3CEB6D721DEE8FC200D35A77 /* HotTakeCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CEB6D701DEE8FC200D35A77 /* HotTakeCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEB6D7A1DEE92AA00D35A77 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEB6D791DEE92AA00D35A77 /* ReactiveKit.framework */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		3C1898F81E02C142008F4BCB /* Bond.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bond.framework; path = "Build/Products/Debug-iphoneos/Bond.framework"; sourceTree = "<group>"; };
+		3C3DEDC91E390A6E00B34699 /* Bond.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bond.swift; sourceTree = "<group>"; };
 		3CEB6D6D1DEE8FC200D35A77 /* HotTakeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HotTakeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CEB6D701DEE8FC200D35A77 /* HotTakeCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotTakeCore.h; sourceTree = "<group>"; };
 		3CEB6D711DEE8FC200D35A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				3CEB6D951DEE953600D35A77 /* ReactiveKit.swift */,
+				3C3DEDC91E390A6E00B34699 /* Bond.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				3CEB6D931DEE949A00D35A77 /* AnyDataSource.swift in Sources */,
 				3CEB6D991DEE95A100D35A77 /* Manual.swift in Sources */,
 				3CEB6D921DEE949A00D35A77 /* DataSourceType.swift in Sources */,
+				3C3DEDCA1E390A6E00B34699 /* Bond.swift in Sources */,
 				3CEB6D911DEE949A00D35A77 /* Container.swift in Sources */,
 				3CEB6D961DEE953600D35A77 /* ReactiveKit.swift in Sources */,
 				3CEB6D9B1DEE95BF00D35A77 /* PostSort.swift in Sources */,
