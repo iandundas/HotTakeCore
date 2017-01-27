@@ -50,8 +50,8 @@ class ManualDatasourceTests: XCTestCase {
         let firstEvent = ChangesetProperty(nil)
         let secondEvent = ChangesetProperty(nil)
         
-        datasource.mutations().element(at: 0).bind(to: firstEvent).disposeIn(bag)
-        datasource.mutations().element(at: 1).bind(to: secondEvent).disposeIn(bag)
+        datasource.mutations().element(at: 0).bind(to: firstEvent).dispose(in: bag)
+        datasource.mutations().element(at: 1).bind(to: secondEvent).dispose(in: bag)
         
         expect(firstEvent.value?.change).to(equal(ObservableArrayChange.reset))
         expect(secondEvent.value?.change).to(beNil())
@@ -59,59 +59,40 @@ class ManualDatasourceTests: XCTestCase {
     
     func testInsertEventIsReceived(){
         datasource = ManualDataSource<Cat>(items: [])
-        
-        let secondEvent = ChangesetProperty(nil)
-        datasource.mutations().element(at: 1).bind(to: secondEvent).disposeIn(bag)
-        
-        let thirdEvent = ChangesetProperty(nil)
-        datasource.mutations().element(at: 2).bind(to: thirdEvent).disposeIn(bag)
-        
-        let fourthEvent = ChangesetProperty(nil)
-        datasource.mutations().element(at: 3).bind(to: fourthEvent).disposeIn(bag)
+        let events = datasource.mutations().store()
         
         datasource.replaceItems(items: [catA, catB])
         
-        expect(secondEvent.value?.change).to(equal(ObservableArrayChange.beginBatchEditing))
-        expect(thirdEvent.value?.change).to(equal(ObservableArrayChange.inserts([0,1])))
-        expect(fourthEvent.value?.change).to(equal(ObservableArrayChange.endBatchEditing))
+        expect(events[1]?.change) == ObservableArrayChange.beginBatchEditing
+        expect(events[2]?.change) == ObservableArrayChange.inserts([0])
+        expect(events[3]?.change) == ObservableArrayChange.inserts([1])
+        expect(events[4]?.change) == ObservableArrayChange.endBatchEditing
     }
     
     func testDeleteEventIsReceived(){
         let items = [catA, catB]
         datasource = ManualDataSource<Cat>(items: items)
+        
+        let events = datasource.mutations().store()
        
-        let secondEvent = ChangesetProperty(nil)
-        datasource.mutations().element(at: 1).bind(to: secondEvent).disposeIn(bag)
-        
-        let thirdEvent = ChangesetProperty(nil)
-        datasource.mutations().element(at: 2).bind(to: thirdEvent).disposeIn(bag)
-        
-        let fourthEvent = ChangesetProperty(nil)
-        datasource.mutations().element(at: 3).bind(to: fourthEvent).disposeIn(bag)
-
         datasource.replaceItems(items: [])
-
-        expect(secondEvent.value?.change).to(equal(ObservableArrayChange.beginBatchEditing))
-        expect(thirdEvent.value?.change).to(equal(ObservableArrayChange.deletes([0,1])))
-        expect(fourthEvent.value?.change).to(equal(ObservableArrayChange.endBatchEditing))
+        
+        expect(events[1]?.change) == ObservableArrayChange.beginBatchEditing
+        expect(events[2]?.change) == ObservableArrayChange.deletes([0])
+        expect(events[3]?.change) == ObservableArrayChange.deletes([1])
+        expect(events[4]?.change) == ObservableArrayChange.endBatchEditing
     }
     
 
     func testBasicInsertBindingWhereObserverIsBoundBeforeInsert() {
         datasource = ManualDataSource<Cat>(items: [])
-        
-        let firstChangeset = ChangesetProperty(nil)
-        datasource.mutations().element(at: 0).bind(to: firstChangeset)
-        
-        let thirdChangeset = ChangesetProperty(nil)
-        datasource.mutations().element(at: 2).bind(to: thirdChangeset)
-        
+        let events = datasource.mutations().store()
+
         datasource.replaceItems(items: [catA])
         
-        expect(firstChangeset.value?.source).to(beEmpty())
-        
-        expect(thirdChangeset.value?.source).to(haveCount(1))
-        expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.inserts([0])))
+        expect(events[0]?.dataSource).to(beEmpty())
+        expect(events[2]?.change) == ObservableArrayChange.inserts([0])
+        expect(events[3]?.change) == ObservableArrayChange.endBatchEditing
     }
 
     
@@ -120,16 +101,10 @@ class ManualDatasourceTests: XCTestCase {
         
         datasource.replaceItems(items: [catA])
         
-        let firstChangeset = ChangesetProperty(nil)
-        datasource.mutations().element(at: 0).bind(to: firstChangeset)
+        let events = datasource.mutations().store()
         
-        let secondChangeset = ChangesetProperty(nil)
-        datasource.mutations().element(at: 1).bind(to: secondChangeset)
-        
-        expect(firstChangeset.value?.source).to(haveCount(1))
-        expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
-        
-        expect(secondChangeset.value).to(beNil())
+        expect(events[0]?.source).to(haveCount(1))
+        expect(events[1]?.source).to(beNil())
     }
     
     func testBasicInsertBindingWhereObserverIsBoundAfterInsertWithADelay() {
@@ -155,20 +130,14 @@ class ManualDatasourceTests: XCTestCase {
     
     func testBasicInsertBindingWhereObserverIsBoundBeforeInsertAndAnItemIsAlreadyAdded() {
         datasource = ManualDataSource<Cat>(items: [catA])
-        
-        let firstChangeset = ChangesetProperty(nil)
-        datasource.mutations().element(at: 0).bind(to: firstChangeset)
-        
-        let thirdChangeset = ChangesetProperty(nil)
-        datasource.mutations().element(at: 2).bind(to: thirdChangeset)
-        
+        let events = datasource.mutations().store()
+
         datasource.replaceItems(items: [catA, catB])
+
+        expect(events[0]?.source).to(haveCount(1))
         
-        expect(firstChangeset.value?.source).to(haveCount(1))
-        // expect(firstChangeset.value?.inserts.count).to(equal(0))
-        
-        expect(thirdChangeset.value?.source).to(haveCount(2))
-        expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.inserts([1])))
+        expect(events[2]?.source).to(haveCount(2))
+        expect(events[2]?.change) == ObservableArrayChange.inserts([1])
     }
     
     func testBasicInsertBindingWhereObserverIsBoundAfterInsertWithoutDelayAndAnItemIsAlreadyAdded() {
@@ -176,16 +145,12 @@ class ManualDatasourceTests: XCTestCase {
         
         datasource.replaceItems(items:[catA, catB])
         
-        let firstChangeset = ChangesetProperty(nil)
-        datasource.mutations().element(at: 0).bind(to: firstChangeset)
+        let events = datasource.mutations().store()
         
-        let secondChangeset = ChangesetProperty(nil)
-        datasource.mutations().element(at: 1).bind(to: secondChangeset)
+        expect(events[0]?.source).to(haveCount(2))
+        expect(events[0]?.change) == ObservableArrayChange.reset
         
-        expect(firstChangeset.value?.source).to(haveCount(2))
-        expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
-        
-        expect(secondChangeset.value).to(beNil())
+        expect(events[1]).to(beNil())
     }
 
     
@@ -226,48 +191,16 @@ class ManualDatasourceTests: XCTestCase {
         expect(secondChangeset.value).to(beNil())
     }
     
-    func testBasicDeleteWhereColletionEmptiesAfterObservingBeforehand() {
+    func testBasicDeleteWhereCollectionEmptiesAfterObservingBeforehand() {
         datasource = ManualDataSource<Cat>(items: [catA])
         
-        let firstChangeset = ChangesetProperty(nil)
-        self.datasource.mutations().element(at: 0).bind(to: firstChangeset)
-        let thirdChangeset = ChangesetProperty(nil)
-        self.datasource.mutations().element(at: 2).bind(to: thirdChangeset)
+        let events = datasource.mutations().store()
         
         datasource.replaceItems(items: [])
         
-        expect(firstChangeset.value?.source).to(haveCount(1))
+        expect(events[0]?.source).to(haveCount(1))
         
-        expect(thirdChangeset.value?.source).to(haveCount(0))
-        expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.deletes([0])))
+        expect(events[2]?.change) == ObservableArrayChange.deletes([0])
+        expect(events[2]?.source).to(haveCount(0))
     }
-    
-
-//    func testBasicUpdateWhereCollectionIsObservingBeforehandAfterDelay() {
-//        datasource = ManualDataSource<Cat>(items: [catA])
-//        
-//        datasource.mutations().observeNext {event in
-//            print("event: \(event)")
-//        }
-//        let firstChangeset = ChangesetProperty(nil)
-//        self.datasource.mutations().element(at: 0).bind(to: firstChangeset)
-//        let secondChangeset = ChangesetProperty(nil)
-//        self.datasource.mutations().element(at: 1).bind(to: secondChangeset)
-//        
-//        Queue.main.after(1){
-//            self.catA.name = "miss miggins"
-//            self.datasource.replaceItems([self.catA])
-//        }
-//        
-//        expect(firstChangeset.value?.collection.count).to(equal(1))
-//        expect(firstChangeset.value?.inserts.count).to(equal(0))
-//        expect(firstChangeset.value?.updates.count).to(equal(0))
-//        expect(firstChangeset.value?.deletes.count).to(equal(0))
-//        
-//        expect(secondChangeset.value?.collection.count).to(equal(1))
-//        expect(secondChangeset.value?.inserts.count).to(equal(0))
-//        expect(secondChangeset.value?.updates.count).to(equal(1))
-//        expect(secondChangeset.value?.deletes.count).to(equal(0))
-//        
-//    }
 }
