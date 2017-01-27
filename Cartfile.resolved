@@ -1,4 +1,4 @@
-github "wokalski/Diff.swift" "0.4.2"
+github "wokalski/Diff.swift" "0.5.1"
 github "quick/Nimble" "v5.1.1"
 github "ReactiveKit/ReactiveKit" "v3.3.0"
-github "ReactiveKit/Bond" "v5.4.5"
+github "ReactiveKit/Bond" "b8f1016a46666a42ebac009e376d4f7b29fd69a3"

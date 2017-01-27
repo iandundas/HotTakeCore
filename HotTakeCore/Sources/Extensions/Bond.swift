@@ -33,7 +33,7 @@ extension ObservableArray where Item: Equatable {
                         .observeNext(with: observer.next).dispose(in: disposable)
                     
                     // create our own .reset event instead, with the sorted array:
-                    observer.next(ObservableArrayEvent(change: .reset, source: ObservableArray(sorted)))
+                    observer.next(ObservableArrayEvent(change: .reset, source: sorted))
                 }
                 else {
                     guard let differ = differ else {return}
