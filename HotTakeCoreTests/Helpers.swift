@@ -13,6 +13,36 @@ import Nimble
 
 typealias ChangesetProperty = ReactiveKit.Property<ObservableArrayEvent<Cat>?>
 
+
+class EventStore<Item> {
+    
+    private let signal: SafeSignal<Item>
+    private let bag = DisposeBag()
+    private var values: [Item] = []
+    
+    init(signal: SafeSignal<Item>){
+        self.signal = signal
+        
+        signal.observeNext { (next) in
+            self.values.append(next)
+            }.dispose(in: bag)
+    }
+    
+    subscript(index: Int) -> Item? {
+        get {
+            guard values.count > index else {return nil}
+            return values[index]
+        }
+    }
+}
+
+extension SignalProtocol{
+    func store() -> EventStore<Element>{
+        return EventStore(signal: self.suppressError(logging: false))
+    }
+}
+
+
 public func equal(_ expected: ObservableArrayChange?) -> MatcherFunc<ObservableArrayChange?> {
     return MatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "equal <\(expected)>"
@@ -22,7 +52,13 @@ public func equal(_ expected: ObservableArrayChange?) -> MatcherFunc<ObservableA
             return evaluatedActualValue == nil && expected == nil // if they're both nil, then alright.
         }
         
-        switch (concreteActualValue, expectedValue){
+        return concreteActualValue == expectedValue
+    }
+}
+
+extension ObservableArrayChange: Equatable {
+    public static func ==(a: ObservableArrayChange, b: ObservableArrayChange) -> Bool{
+        switch (a,b){
         case (.reset, .reset): return true
         case (.beginBatchEditing, .beginBatchEditing): return true
         case (.endBatchEditing, .endBatchEditing): return true
@@ -35,3 +71,4 @@ public func equal(_ expected: ObservableArrayChange?) -> MatcherFunc<ObservableA
         }
     }
 }
+
