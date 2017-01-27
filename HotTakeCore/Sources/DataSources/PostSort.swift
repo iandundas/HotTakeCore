@@ -40,9 +40,8 @@ public class PostSortDataSource<Item: Equatable>: DataSourceType {
 
 public extension DataSourceType{
 
-  public func postSort(isOrderedBefore: @escaping (ItemType, ItemType) -> Bool) -> AnyDataSource<ItemType>{
+  public func postSort(isOrderedBefore: @escaping (ItemType, ItemType) -> Bool) -> PostSortDataSource<ItemType>{
     let wrapper = AnyDataSource(self)
-    let postsort = PostSortDataSource(datasource: wrapper, isOrderedBefore: isOrderedBefore)
-    return AnyDataSource(postsort)
+    return PostSortDataSource(datasource: wrapper, isOrderedBefore: isOrderedBefore)
   }
 }
