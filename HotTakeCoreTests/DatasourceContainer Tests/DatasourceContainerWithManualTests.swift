@@ -59,7 +59,7 @@ class ContainerWithManualTests: XCTestCase {
             detectedInitialEvent = noMutations
             
             initialItems = changes.source.array
-        }.disposeIn(bag)
+        }.dispose(in: bag)
     
         expect(detectedInitialEvent).toEventually(beTrue())
         expect(initialItems).toEventually(equal(nonemptyCollection))
@@ -79,7 +79,7 @@ class ContainerWithManualTests: XCTestCase {
             detectedInitialEvent = changes.resetted
             
             initialItems = changes.source.array
-        }.disposeIn(bag)
+        }.dispose(in: bag)
         
         expect(detectedInitialEvent).toEventually(beTrue())
         expect(initialItems).toEventually(equal(nonemptyCollection))
@@ -95,7 +95,7 @@ class ContainerWithManualTests: XCTestCase {
                 guard changes.resetted else {fail("Should be initial event"); return}
                 
                 observeCallCount += 1
-            }.disposeIn(bag)
+            }.dispose(in: bag)
         
         expect(observeCallCount).toEventually(equal(1), timeout: 1)
         expect(observeCallCount).toEventuallyNot(beGreaterThan(1), timeout: 1)
@@ -104,7 +104,7 @@ class ContainerWithManualTests: XCTestCase {
     func testSwapEmptyForEmptyProducesNoChange(){
         
         let container = ManualDataSource<Cat>(items: [Cat]()).encloseInContainer()
-        
+
         let firstChangeset = ChangesetProperty(nil)
         container.collection.element(at: 0).bind(to: firstChangeset)
         
@@ -113,42 +113,50 @@ class ContainerWithManualTests: XCTestCase {
 
         // replace datasource:
         container.datasource = ManualDataSource<Cat>(items: [Cat]()).eraseType()
-        
+
         expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
-        expect(secondChangeset.value).toNot(beNil())
+        expect(secondChangeset.value).to(beNil())
     }
     
     func testSwapNonemptyForEmptyProducesNoChange(){
         
         let container = ManualDataSource<Cat>(items: nonemptyCollection).encloseInContainer()
-        
+
         let firstChangeset = ChangesetProperty(nil)
         container.collection.element(at: 0).bind(to: firstChangeset)
         
         let thirdChangeset = ChangesetProperty(nil)
         container.collection.element(at: 2).bind(to: thirdChangeset)
+        
+        let fifthChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 4).bind(to: fifthChangeset)
+        
+        let seventhChangeset = ChangesetProperty(nil)
+        container.collection.element(at: 6).bind(to: seventhChangeset)
         
         // replace datasource:
         container.datasource = ManualDataSource<Cat>(items: [Cat]()).eraseType()
         
         expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
-        expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.deletes([0,1,2])))
+        expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.deletes([0])))
+        expect(fifthChangeset.value?.change).to(equal(ObservableArrayChange.deletes([2])))
+        expect(seventhChangeset.value).to(beNil())
     }
     
     func testMutationProducesChange(){
         let datasource = ManualDataSource<Cat>(items: nonemptyCollection)
         let container = datasource.encloseInContainer()
-        
-        let firstChangeset = ChangesetProperty(nil)
-        container.collection.element(at: 0).bind(to: firstChangeset)
-        
-        let thirdChangeset = ChangesetProperty(nil)
-        container.collection.element(at: 2).bind(to: thirdChangeset)
+        let events = container.collection.store()
         
         // mutate datasource:
         datasource.replaceItems(items: emptyCollection)
-        
-        expect(firstChangeset.value?.change).to(equal(ObservableArrayChange.reset))
-        expect(thirdChangeset.value?.change).to(equal(ObservableArrayChange.deletes([0,1,2])))
+
+        expect(events[0]?.change) == ObservableArrayChange.reset
+        expect(events[1]?.change) == ObservableArrayChange.beginBatchEditing
+        expect(events[2]?.change) == ObservableArrayChange.deletes([0])
+        expect(events[3]?.change) == ObservableArrayChange.deletes([1])
+        expect(events[4]?.change) == ObservableArrayChange.deletes([2])
+        expect(events[5]?.change) == ObservableArrayChange.endBatchEditing
     }
 }
+
