@@ -56,19 +56,3 @@ public func equal(_ expected: ObservableArrayChange?) -> MatcherFunc<ObservableA
     }
 }
 
-extension ObservableArrayChange: Equatable {
-    public static func ==(a: ObservableArrayChange, b: ObservableArrayChange) -> Bool{
-        switch (a,b){
-        case (.reset, .reset): return true
-        case (.beginBatchEditing, .beginBatchEditing): return true
-        case (.endBatchEditing, .endBatchEditing): return true
-        case let (.inserts(a), .inserts(b)): return a == b
-        case let (.deletes(a), .deletes(b)): return a == b
-        case let (.updates(a), .updates(b)): return a == b
-        case let (.move(a), .move(b)): return a == b
-        default:
-            return false
-        }
-    }
-}
-

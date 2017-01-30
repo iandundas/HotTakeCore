@@ -55,16 +55,18 @@ class PostSortDatasourceTests: XCTestCase {
         expect(secondEvent.value?.change).to(beNil())
     }
     
-    func testBasicDeleteWhereColletionEmptiesAfterObservingBeforehand() {
+    func testBasicDeleteWhereCollectionEmptiesAfterObservingBeforehand() {
         manualDatasource = ManualDataSource<Cat>(items: [catA])
         postsortDatasource = manualDatasource.postSort(isOrderedBefore: { return $0.name < $1.name })
-        
         let events = postsortDatasource.mutations().store()
+        
         
         manualDatasource.replaceItems(items: [])
         
         expect(events[0]?.source).to(haveCount(1))
-        expect(events[2]?.source).to(haveCount(0))
+        
+        // FIXME current failing, spits out many more beginBatchEdit/endBatchEdits than necessary
         expect(events[2]?.change) == ObservableArrayChange.deletes([0])
+        expect(events[2]?.source).to(haveCount(0))
     }
 }
