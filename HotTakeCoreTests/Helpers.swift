@@ -34,6 +34,10 @@ class EventStore<Item> {
             return values[index]
         }
     }
+    
+    var count: Int{
+        return values.count
+    }
 }
 
 extension SignalProtocol{

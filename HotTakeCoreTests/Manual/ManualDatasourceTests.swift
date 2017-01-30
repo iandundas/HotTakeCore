@@ -67,6 +67,8 @@ class ManualDatasourceTests: XCTestCase {
         expect(events[2]?.change) == ObservableArrayChange.inserts([0])
         expect(events[3]?.change) == ObservableArrayChange.inserts([1])
         expect(events[4]?.change) == ObservableArrayChange.endBatchEditing
+        
+        expect(events.count) == 5
     }
     
     func testDeleteEventIsReceived(){

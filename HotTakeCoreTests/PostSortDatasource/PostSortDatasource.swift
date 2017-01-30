@@ -55,6 +55,22 @@ class PostSortDatasourceTests: XCTestCase {
         expect(secondEvent.value?.change).to(beNil())
     }
     
+    func testInsertEventIsReceived(){
+        manualDatasource = ManualDataSource<Cat>(items: [])
+        postsortDatasource = manualDatasource.postSort(isOrderedBefore: { return $0.name < $1.name })
+        
+        let events = postsortDatasource.mutations().store()
+        
+        manualDatasource.replaceItems(items: [catA, catB])
+        
+        expect(events[1]?.change) == ObservableArrayChange.beginBatchEditing
+        expect(events[2]?.change) == ObservableArrayChange.inserts([0])
+        expect(events[3]?.change) == ObservableArrayChange.inserts([1])
+        expect(events[4]?.change) == ObservableArrayChange.endBatchEditing
+        
+        expect(events.count) == 5
+    }
+    
     func testBasicDeleteWhereCollectionEmptiesAfterObservingBeforehand() {
         manualDatasource = ManualDataSource<Cat>(items: [catA])
         postsortDatasource = manualDatasource.postSort(isOrderedBefore: { return $0.name < $1.name })
